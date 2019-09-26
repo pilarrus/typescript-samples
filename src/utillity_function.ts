@@ -1,4 +1,5 @@
 import { curry } from "ramda";
+import { T } from "ts-toolbelt";
 
 var add = curry(function(x: number, y: number) {
   return x + y;
@@ -64,6 +65,30 @@ var split = (xs: string): string[] => {
   var result = xs.match(regex);
   return (result == null) ? [""] : result;
 };
+
+/*var product = (xs: number[], ys: string[]) => {
+  var zs = [];
+    var minlength = Math.min(xs.length, ys.length);
+    for(var i = 0; i < minlength; i++){
+      for(var j = 0; j < minlength; j++){
+        zs.push(xs[i] + ys[i]);
+      }
+    }
+    return zs;
+};*/
+
+var product = (xs: number[], ys: string[]) => {
+  var zs = [];
+    var minlength = Math.min(xs.length, ys.length);
+    for(var i = 0; i < minlength; i++){
+      for(var j = 0; j < minlength; j++){
+        zs.push([xs[i], ys[i]]);
+      }
+    }
+    return zs;
+}
+
+//var product = <T,R>(xs:)
 
 export { accumulator, add, append, capitalize, double, flip, greaterThanThree,
   isOdd, longest, longestString, max, min, minus, pair, repeat, split, toUpperCase};
