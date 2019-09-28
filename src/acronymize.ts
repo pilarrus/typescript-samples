@@ -1,52 +1,30 @@
-import { append, initial, isValidWord, repeat, toUpperCase, unWords, words} from "./utillity_function";
+import { append, id, initial, isValidWord, repeat, toUpperCase, unWords, words} from "./utillity_function";
 import { compose, map, filter } from "ramda";
-/* No funcionan porque no están currificadas
-import map from "./map"; 
-import filter from "./filter";*/
 
-var toCharAcrom = () =>
+var toCharAcrom = (separator = "", pluralize = true, capitalize = false) =>
     compose(
-        append("."),
-        repeat(2),
-        toUpperCase,
+        append(separator),
+        (pluralize) ? repeat(2) : repeat(1),
+        (capitalize) ? toUpperCase : id,
         initial,
     );
 
-var acronymize = (phrase: string): string =>
+var acronymize = (phrase: string, separator = "", pluralize = false, capitalize = true): string =>
     compose(
         unWords,
-        map(toCharAcrom()),
+        map(toCharAcrom(separator, pluralize, capitalize)),
         filter(isValidWord),
         //@ts-ignore
         words
     )(phrase);
 
 export default acronymize;
-/*export default function acronymize(xs: string): string {
-    var resultArray;
-    resultArray = words(xs);
-    resultArray = filter(isValidWord, resultArray)
-    resultArray = map(toUpperCase, resultArray);
-    resultArray = map(initial, resultArray);
-    resultArray = map(repeat(2), resultArray);
-    resultArray = map(append("."), resultArray);
-    resultArray = unWords(resultArray);
-    return resultArray;
-};*/
 
-/*import compose from "ramda/es/compose";
-import map from "ramda";
-import { append, repeat, toUpperCase, capitalize, split } from "./utillity_function";
-import filter from './filter';
-//, separator?: string, capitalize?: boolean, pluralize?: boolean)
-
-export default function acronimy(xs: string): string[] {
-    compose(
-        map(append(".")),
-        map(repeat(2)),
-        map(toUpperCase),
-        map(capitalize),
-        words(xs)
-    )
-
-}*/
+/*
+* No funcionan porque no están currificadas:
+* import map from "./map"; 
+* import filter from "./filter";
+*
+* Por defecto la función tendrá esos parámetros, si le pasas otros valores cambian su valor.
+* (phrase: string, separator = "", pluralize = false, capitalize = true)
+*/

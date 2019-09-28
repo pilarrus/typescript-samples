@@ -26,6 +26,8 @@ var greaterThanThree = (xs: string) => xs.length > 3;
 var inc = add(1); // point free style version
 // export var inc = (x: number) => add(1)(x);
 
+var id = (x: any) => x;
+
 var initial = (xs: string): string => xs[0];
 
 var isOdd = (x: number) => x % 2 != 0;
@@ -89,6 +91,6 @@ var words = (xs: string): string[] => {
 
 var toUpperCase = (xs: string) => xs.toUpperCase();
 
-export { add, append, capitalize, double, flip, greaterThanThree, initial, inc,
+export { add, append, capitalize, double, flip, greaterThanThree, id, initial, inc,
   isOdd, isValidWord, max, maxLengthString, maxString, min, minus, not, pair,
   repeat, toUpperCase, unWords, words};

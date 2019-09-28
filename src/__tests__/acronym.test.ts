@@ -2,11 +2,6 @@ import acronymize from "../acronymize";
 
 describe("Acronym tests", function() {
   it(".....", function() {
-    expect(acronymize("Organización de naciones unidas")).toEqual("OO.NN.UU.");
-  });
-})
-/*describe("Acronym tests", function() {
-  it(".....", function() {
     expect(acronymize("Organización de naciones DE unidas")).toEqual("ONU");
     expect(acronymize("Organización de naciones DE unidas", ".")).toEqual(
       "O.N.U."
@@ -15,4 +10,4 @@ describe("Acronym tests", function() {
     expect(acronymize("Estados unidos", "", true, false)).toEqual("EEuu");
     expect(acronymize("", ".", true, false)).toEqual("");
   });
-});*/
+});
