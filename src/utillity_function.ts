@@ -1,24 +1,43 @@
 import { curry } from "ramda";
 import { T } from "ts-toolbelt";
+import { INVALID_WORDS } from "./data";
 
 var add = curry(function(x: number, y: number) {
   return x + y;
 });
- //var add = (x: number, y: number) => x + y;
- // export var inc = (x: number) => add(1)(x);
-export var inc = add(1); // point free style version
- var double = (x: number) => x * 2;
- var isOdd = (x: number) => x % 2 != 0;
- var toUpperCase = (x: string) => x.toUpperCase();
- var greaterThanThree = (x: string) => x.length > 3;
- var accumulator = (x: number, y: number): number => x += y;
- var max = (x: number, y: number) => (x > y ? x : y);
- var min = (x: number, y: number) => (x < y ? x : y);
+//var add = (x: number, y: number) => x + y;
 
-/*export var maxLengthString = (limit: number, xs: string) =>
+var append = (suffix: string) =>(xs: string) => xs + suffix;
+
+//var append = (xs: string, ys: string): string => ys + xs;
+
+var capitalize = (xs: string): string => xs[0];
+
+var double = (x: number) => x * 2;
+
+var flip = function<X, Y, Z>(f: (x: X, y: Y) => Z): (y: Y, x: X) => Z {
+  return function(x, y) {
+    return f(y, x);
+  }
+};
+
+var greaterThanThree = (xs: string) => xs.length > 3;
+
+var inc = add(1); // point free style version
+// export var inc = (x: number) => add(1)(x);
+
+var initial = (xs: string): string => xs[0];
+
+var isOdd = (x: number) => x % 2 != 0;
+
+var isValidWord = (word: string) => !INVALID_WORDS.includes(word.toLowerCase());
+
+var max = (x: number, y: number) => (x > y ? x : y);
+
+var maxLengthString = (limit: number, xs: string) =>
   limit > xs.length ? limit : xs.length;
 
-export var maxString = (maxXs: string[], xs: string): string[] => {
+var maxString = (maxXs: string[], xs: string): string[] => {
   if (maxXs.length === 0 || xs.length > maxXs[0].length) {
     return [xs];
   } else if (xs.length == maxXs[0].length) {
@@ -27,68 +46,49 @@ export var maxString = (maxXs: string[], xs: string): string[] => {
   return maxXs;
 };
 
-export var pair = <T, R>(x: T, y: R): [T, R] => [x, y];*/
-
-var longest = (x: number, y: string): number => {
-  if(y.length > x) {
-    x = y.length;
-  }
-  return x;
-};
-
-var longestString = (x: string, y: string): string => {
-  if(y.length > x.length) {
-    x = y;
-  }
-  return x;
-};
-
-var pair = (x: number, y: number): number[] => {
-  var array = [];
-  array.push(x,y);
-  return array;
-};
-
-var flip = function<X, Y, Z>(f: (x: X, y: Y) => Z): (y: Y, x: X) => Z {
-  return function(x, y) {
-    return f(y, x);
-  }
-};
+var min = (x: number, y: number) => (x < y ? x : y);
 
 var minus = (x: number, y: number) => x - y;
 
-var append = (x: string, y: string): string => y + x;
-var repeat = (x: number, y: string): string => (x == 1) ? y : y + repeat(--x, y);
-var capitalize = (x: string): string => x[0];
-var split = (xs: string): string[] => {
-  var regex = /[^. ,;:!?]+/g;
-  var result = xs.match(regex);
-  return (result == null) ? [""] : result;
-};
+var not = <T>(f: (x: T) => boolean) => (x: T) => !f(x); // Currificada en ES&
 
-/*var product = (xs: number[], ys: string[]) => {
-  var zs = [];
-    var minlength = Math.min(xs.length, ys.length);
-    for(var i = 0; i < minlength; i++){
-      for(var j = 0; j < minlength; j++){
-        zs.push(xs[i] + ys[i]);
-      }
-    }
-    return zs;
+/*var not = <T>(f: (x: T) => boolean) => {
+  return function(x: T) {
+    return !f(x);
+  }
+}*/ // Currificada en ES5
+
+//var not = <T>(f: any, x: T) => !f(x);
+
+
+var pair = <T, R>(x: T, y: R): [T, R] => [x, y];
+/*var pair = <T, R>(x: T, y: R): [T, R] => {
+  var array = [];
+  array.push(x,y);
+  return array;
 };*/
 
-var product = (xs: number[], ys: string[]) => {
-  var zs = [];
-    var minlength = Math.min(xs.length, ys.length);
-    for(var i = 0; i < minlength; i++){
-      for(var j = 0; j < minlength; j++){
-        zs.push([xs[i], ys[i]]);
-      }
-    }
-    return zs;
-}
+var repeat = (times: number) => (xs: string): string =>
+  times === 0 ? "" : xs + repeat(times - 1)(xs); // Currificada con ES6
 
-//var product = <T,R>(xs:)
+  /*var repeat = function(times: number) {
+  return function(xs: string): string {
+    return times === 0 ? "" : xs + repeat(--times)(xs);
+  };
+};*/ //Currificada con ES5
 
-export { accumulator, add, append, capitalize, double, flip, greaterThanThree,
-  isOdd, longest, longestString, max, min, minus, pair, repeat, split, toUpperCase};
+/*var repeat = (times: number, xs: string): string =>
+ (times == 1) ? xs : xs + repeat(--times, xs);*/
+
+var unWords = (xs: string[]): string => xs.join("");
+
+var words = (xs: string): string[] => {
+  var result = xs.match(/[^. ,;:!?]+/g);
+  return (result == null) ? [] : result;
+};
+
+var toUpperCase = (xs: string) => xs.toUpperCase();
+
+export { add, append, capitalize, double, flip, greaterThanThree, initial, inc,
+  isOdd, isValidWord, max, maxLengthString, maxString, min, minus, not, pair,
+  repeat, toUpperCase, unWords, words};
