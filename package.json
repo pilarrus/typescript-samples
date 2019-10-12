@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e ts -w src --exec \"tsc --outDir dist src/product.ts && node dist/product.js\"",
+    "dev": "nodemon -e ts -w src --exec \"tsc --outDir dist src/huffman.ts && node dist/huffman.js\"",
     "test": "jest --watch"
   },
   "devDependencies": {
