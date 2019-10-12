@@ -110,4 +110,12 @@ describe("Huffman", function() {
     ).toEqual("11011110000110");
   });
 
+  it("Huffman", function() {
+    expect(huffmanCode(searchLettersInTree("Laptop")(createTree(bubble(joinLetterCounter("Laptop")))))).toEqual("11011110000110");
+  });
+
+  it("Huffman", function() {
+    expect(huffmanCode(searchLettersInTree("Hello")(createTree(bubble(joinLetterCounter("Hello")))))).toEqual("0001111110");
+  });
+
 });
