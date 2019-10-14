@@ -1,9 +1,10 @@
 import {
   add,
-  bubble,
+  bubbleSort,
   count,
   createTree,
   deleteChar,
+  huffman,
   huffmanCode,
   joinLetterCounter,
   replaceDirection,
@@ -37,7 +38,7 @@ describe("Huffman", function() {
   });
   
   it("Ordena de menor a mayor los arrays que hay dentro del array según las veces que se repite la letra", function() {
-    expect(bubble([["L", 1], ["a", 1], ["p", 2], ["t", 1], ["o", 1]])).toEqual([
+    expect(bubbleSort([["L", 1], ["a", 1], ["p", 2], ["t", 1], ["o", 1]])).toEqual([
       ["L", 1],
       ["a", 1],
       ["t", 1],
@@ -110,12 +111,39 @@ describe("Huffman", function() {
     ).toEqual("11011110000110");
   });
 
-  it("Huffman", function() {
-    expect(huffmanCode(searchLettersInTree("Laptop")(createTree(bubble(joinLetterCounter("Laptop")))))).toEqual("11011110000110");
+  it("HuffmanCode", function() {
+    expect(huffmanCode(searchLettersInTree("Laptop")(createTree(bubbleSort(joinLetterCounter("Laptop")))))).toEqual("11011110000110");
   });
 
-  it("Huffman", function() {
-    expect(huffmanCode(searchLettersInTree("Hello")(createTree(bubble(joinLetterCounter("Hello")))))).toEqual("0001111110");
+  it("HuffmanCode", function() {
+    expect(huffmanCode(searchLettersInTree("Hello")(createTree(bubbleSort(joinLetterCounter("Hello")))))).toEqual("0001111110");
+  });
+
+  let word = "Laptop";
+  let arraySorted = [["L", 1], ["a", 1], ["t", 1], ["o", 1], ["p", 2]];
+  let tree = [
+    [
+      [null, 6],
+      [[null, 2], ["t", 1], ["o", 1]],
+      [[null, 4], ["p", 2], [[null, 2], ["L", 1], ["a", 1]]]
+    ]
+  ];
+  let lettersDirections = [ 
+    [ 'L', '110' ],
+    [ 'a', '111' ],
+    [ 'p', '10' ],
+    [ 't', '00' ],
+    [ 'o', '01' ],
+    [ 'p', '10' ]
+  ];
+  let huffmanWord = "11011110000110";
+
+  it("Compose", function() {
+    expect(huffman(word)).toEqual(huffmanWord);
+  });
+
+  it("Compose", function() {
+    expect(huffman("Elefantitos")).toEqual("1100110111101111000001101010101011100");
   });
 
 });

@@ -1,3 +1,5 @@
+import { compose } from "ramda";
+
 const count = (x: string) => (xs: string): number => {
   let counter = 0;
   for(let i = 0; i < xs.length; i++) {
@@ -46,7 +48,7 @@ const joinLetterCounter = (xs: string): (string | number)[][] => {
   return ys;
 };
 
-const bubble = (xs: (string | number)[][]): (string | number)[][] => {
+const bubbleSort = (xs: (string | number)[][]): (string | number)[][] => {
   for(let times = xs.length; times > 0; times--) {
     for(let i = 0; i < xs.length-1; i++) {
       let j = i + 1;
@@ -127,12 +129,22 @@ const huffmanCode = (xs: string[][]): string => {
   return ys;
 };
 
+const huffman = (xs: string) =>
+  compose(
+    huffmanCode,
+    searchLettersInTree(xs),
+    createTree,
+    bubbleSort,
+    joinLetterCounter
+  )(xs);
+
 let word = "Laptop";
 console.log(word);
 //console.log(joinLetterCounter(word));
-//console.log(bubble(joinLetterCounter(word)));
-//console.log(createTree(bubble(joinLetterCounter(word))));
-//console.log(searchLettersInTree(word)(createTree(bubble(joinLetterCounter(word)))));
-//console.log(huffmanCode(searchLettersInTree(word)(createTree(bubble(joinLetterCounter(word))))));
+//console.log(bubbleSort(joinLetterCounter(word)));
+//console.log(createTree(bubbleSort(joinLetterCounter(word))));
+//console.log(searchLettersInTree(word)(createTree(bubbleSort(joinLetterCounter(word)))));
+//console.log(huffmanCode(searchLettersInTree(word)(createTree(bubbleSort(joinLetterCounter(word))))));
+//console.log(huffman(word));
 
-export { add, bubble, count, createTree, deleteChar, huffmanCode, joinLetterCounter, replaceDirection, searchInTree, searchLastPosition, searchLettersInTree };
+export { add, bubbleSort, count, createTree, deleteChar, huffman, huffmanCode, joinLetterCounter, replaceDirection, searchInTree, searchLastPosition, searchLettersInTree };
